@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:housify/presentation/home/widgets/analytics.dart';
@@ -14,46 +15,50 @@ class HeroWidget extends ConsumerWidget {
     final state = ref.watch(dashboardProvider).value;
     final heroState = state?.dashboardData;
 
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.55,
-      padding: const EdgeInsets.only(
-        top: 20,
-        bottom: 8,
-        left: 15,
-        right: 15,
-      ),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color.fromARGB(255, 235, 234, 233),
-            Color.fromARGB(255, 255, 225, 208),
-            Color.fromARGB(255, 255, 198, 165),
-          ],
-          stops: [0.3, 0.7, 1.0],
+    return Animate(
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.6,
+        padding: const EdgeInsets.only(
+          top: 30,
+          bottom: 8,
+          left: 15,
+          right: 15,
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Profile(address: state?.currentAddress),
-          const SizedBox(
-            height: 25,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromARGB(255, 235, 234, 233),
+              Color.fromARGB(255, 255, 225, 208),
+              Color.fromARGB(255, 255, 198, 165),
+            ],
+            stops: [0.3, 0.7, 1.0],
           ),
-          Greeting(
-            userGreet: heroState?.greetingText ?? '',
-            title: heroState?.pageText ?? '',
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Profile(address: state?.currentAddress),
+            const SizedBox(
+              height: 45,
+            ),
+            Greeting(
+              userGreet: heroState?.greetingText ?? '',
+              title: heroState?.pageText ?? '',
+            ),
+            const SizedBox(
+              height: 65,
+            ),
+            Analytics(
+              rentCount: heroState?.rentOfferCount ?? '0',
+              buyCount: heroState?.buyOfferCount ?? '0',
+            )
+          ],
+        ),
+      ).animate().fade(
+            duration: 1000.ms,
           ),
-          const SizedBox(
-            height: 25,
-          ),
-          Analytics(
-            rentCount: heroState?.rentOfferCount ?? '0',
-            buyCount: heroState?.buyOfferCount ?? '0',
-          )
-        ],
-      ),
     );
   }
 }

@@ -93,44 +93,47 @@ class _MapScreenState extends ConsumerState<MapScreen> {
         Positioned(
           top: 50,
           left: 8,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
-                child: const TextField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    prefixIcon: Icon(Icons.search,
-                        color: Colors.black), // Search icon on the left
-                    hintText: 'Search',
-                    contentPadding: EdgeInsets.symmetric(vertical: 10),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(30.0)), // Rounded corners
-                      borderSide: BorderSide.none, // No border
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: const TextField(
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      prefixIcon: Icon(Icons.search,
+                          color: Colors.black), // Search icon on the left
+                      hintText: 'Search',
+                      contentPadding: EdgeInsets.symmetric(vertical: 10),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(30.0)), // Rounded corners
+                        borderSide: BorderSide.none, // No border
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(100)),
-                child: Center(
-                  child: Image.asset(
-                    'assets/images/settings-sliders.png',
-                    width: 20,
-                  ),
+                const SizedBox(
+                  width: 12,
                 ),
-              )
-            ],
+                Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(100)),
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/settings-sliders.png',
+                      width: 20,
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
         Positioned(
