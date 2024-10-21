@@ -1,4 +1,5 @@
 import 'package:housify/core/domain/abstractions/dashboard.abstraction.dart';
+import 'package:housify/core/domain/dtos/location.dto.dart';
 import 'package:housify/service_provider.dart';
 import 'package:housify/shared/models/dashboard.state.model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -43,5 +44,21 @@ class Dashboard extends _$Dashboard {
     } catch (e) {
       rethrow;
     }
+  }
+
+  void toggleLocation(LocationDTO location) {
+    final currentState = state.asData?.value;
+    final locations = currentState?.dashboardData?.locations ?? [];
+    for (var e in locations) {
+      if (e == location) {
+        e.isOpen = !(e.isOpen ?? false);
+      }
+    }
+    final newState = DashboardStateModel(
+      currentLocation: currentState?.currentLocation,
+      dashboardData: currentState?.dashboardData,
+      currentAddress: currentState?.currentAddress,
+    );
+    setState(newState);
   }
 }

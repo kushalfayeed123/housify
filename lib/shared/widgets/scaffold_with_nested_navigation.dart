@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -48,8 +49,7 @@ class _ScaffoldWithNestedNavigationState
   @override
   void initState() {
     super.initState();
-    ref.read<Dashboard>(dashboardProvider.notifier).fetchDashboardData();
-    ref.read<Dashboard>(dashboardProvider.notifier).getUserLocation();
+    fetchData();
 
     bottomNavItems
         .firstWhere(
@@ -60,50 +60,74 @@ class _ScaffoldWithNestedNavigationState
         .isActive = true;
   }
 
+  void fetchData() async {
+    try {
+      await ref
+          .read<Dashboard>(dashboardProvider.notifier)
+          .fetchDashboardData();
+      await ref.read<Dashboard>(dashboardProvider.notifier).getUserLocation();
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    ref.watch(dashboardProvider);
+    final state = ref.watch(dashboardProvider).value;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(child: widget.navigationShell),
+      body: SafeArea(
+          child: (state?.currentAddress ?? '').isNotEmpty
+              ? widget.navigationShell
+              : SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                )),
       extendBody: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Container(
-        width: MediaQuery.of(context).size.width * 0.8,
-        decoration: BoxDecoration(
-            color: Colors.black87, borderRadius: BorderRadius.circular(50)),
-        child: BottomNavigationBar(
-          elevation: 0,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          unselectedItemColor: Colors.transparent,
-          selectedItemColor: Theme.of(context).colorScheme.primary,
-          items: bottomNavItems
-              .map((item) => BottomNavigationBarItem(
-                  icon: CircleAvatar(
-                      radius: item.isActive ? 25 : 20,
-                      backgroundColor: item.isActive
-                          ? Theme.of(context).colorScheme.primary
-                          : Colors.black12.withOpacity(0.6),
-                      child: Image.asset(
-                        'assets/images/${item.isActive ? item.iconActive : item.icon}',
-                        color: Colors.white,
-                        width: 15,
-                      )),
-                  backgroundColor: Colors.transparent,
-                  label: item.text))
-              .toList(),
-          currentIndex: widget.navigationShell.currentIndex,
-          onTap: (int index) => _goBranch(index, ref),
-        ),
-      ),
+      floatingActionButton: (state?.currentAddress ?? '').isNotEmpty
+          ? Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 22, 22, 22),
+                  borderRadius: BorderRadius.circular(50)),
+              child: BottomNavigationBar(
+                elevation: 0,
+                showSelectedLabels: false,
+                showUnselectedLabels: false,
+                unselectedItemColor: Colors.transparent,
+                selectedItemColor: Theme.of(context).colorScheme.primary,
+                items: bottomNavItems
+                    .map((item) => BottomNavigationBarItem(
+                        icon: CircleAvatar(
+                            radius: item.isActive ? 25 : 25,
+                            backgroundColor: item.isActive
+                                ? Theme.of(context).colorScheme.primary
+                                : Colors.black12.withOpacity(0.6),
+                            child: Image.asset(
+                              'assets/images/${item.isActive ? item.iconActive : item.icon}',
+                              color: Colors.white,
+                              width: 20,
+                            )),
+                        backgroundColor: Colors.transparent,
+                        label: item.text))
+                    .toList(),
+                currentIndex: widget.navigationShell.currentIndex,
+                onTap: (int index) => _goBranch(index, ref),
+              ),
+            )
+          : const SizedBox.shrink(),
     );
   }
 
   _goBranch(int index, WidgetRef ref) {
-    // ref.read(dashboardProvider.notifier).fetchDashboardData();
-    // ref.read(dashboardProvider.notifier).getUserLocation();
-
     widget.navigationShell.goBranch(
       index,
       initialLocation: index == widget.navigationShell.currentIndex,

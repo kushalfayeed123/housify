@@ -30,7 +30,7 @@ class Profile extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                address ?? 'Saint Petersburg',
+                address ?? '',
                 style: Theme.of(context).textTheme.bodyMedium,
               )
             ],

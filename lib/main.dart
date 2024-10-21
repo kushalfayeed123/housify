@@ -22,8 +22,8 @@ class MyApp extends ConsumerWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.orangeAccent,
-          primary: Colors.orangeAccent,
+          seedColor: Colors.orange,
+          primary: Colors.orange,
         ),
         textTheme: TextTheme(
           titleLarge: GoogleFonts.openSans(
