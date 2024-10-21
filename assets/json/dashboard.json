@@ -1,0 +1,35 @@
+{
+  "userName": "Michael",
+  "userProfileImage": "https://example.com/profile.jpg",
+  "greetingText": "Hello, Michael!",
+  "pageText": "Welcome to your dashboard",
+  "buyOfferCount": "1355",
+  "rentOfferCount": "2263",
+  "locations": [
+    {
+      "latitude": 6.524379,
+      "longitude": 3.379206,
+      "address": "Location 1, Lagos"
+    },
+    {
+      "latitude": 6.529,
+      "longitude": 3.375,
+      "address": "Location 2, Lagos"
+    },
+    {
+      "latitude": 6.5305,
+      "longitude": 3.38,
+      "address": "Location 3, Lagos"
+    },
+    {
+      "latitude": 6.523,
+      "longitude": 3.3775,
+      "address": "Location 4, Lagos"
+    },
+    {
+      "latitude": 6.527,
+      "longitude": 3.381,
+      "address": "Location 5, Lagos"
+    }
+  ]
+}
