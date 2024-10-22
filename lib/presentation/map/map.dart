@@ -74,12 +74,12 @@ class _MapScreenState extends ConsumerState<MapScreen> {
         children: [
           FlutterMap(
             options: MapOptions(
-              initialZoom: 10,
               keepAlive: true,
               initialCameraFit: CameraFit.bounds(
                 bounds: LatLngBounds(
-                  const LatLng(6.524379, 3.379206),
-                  const LatLng(6.527, 3.381),
+                  const LatLng(6.5285,
+                      3.3790), // Adjusted northernmost and westernmost point
+                  const LatLng(6.5265, 3.3840),
                 ),
                 padding: const EdgeInsets.only(
                   left: 16,
@@ -255,6 +255,12 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   }
 }
 
+class PopMenuItem {
+  String? title;
+  String? image;
+  PopMenuItem({this.title, this.image});
+}
+
 class AnimatedMenu extends StatefulWidget {
   const AnimatedMenu({super.key});
 
@@ -266,6 +272,14 @@ class AnimatedMenuState extends State<AnimatedMenu>
     with SingleTickerProviderStateMixin {
   bool _isMenuOpen = false;
   late AnimationController _animationController;
+
+  final menuItems = [
+    PopMenuItem(title: 'Cosy areas', image: 'assets/images/shield-check.png'),
+    PopMenuItem(title: 'Price', image: 'assets/images/wallet.png'),
+    PopMenuItem(title: 'Infrastructure', image: 'assets/images/bridge.png'),
+    PopMenuItem(
+        title: 'Without any layer', image: 'assets/images/database.png'),
+  ];
 
   @override
   void initState() {
@@ -298,6 +312,8 @@ class AnimatedMenuState extends State<AnimatedMenu>
   @override
   Widget build(BuildContext context) {
     return MenuAnchor(
+      style: const MenuStyle(
+          backgroundColor: WidgetStatePropertyAll(Colors.white)),
       builder:
           (BuildContext context, MenuController controller, Widget? child) {
         return IconButton(
@@ -330,30 +346,29 @@ class AnimatedMenuState extends State<AnimatedMenu>
               scale: _animationController.value,
               child: Opacity(
                 opacity: _animationController.value,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 10,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: List<MenuItemButton>.generate(
-                      3,
-                      (int index) => MenuItemButton(
-                        onPressed: () => setState(() {}),
-                        child: SizedBox(
-                          width: 200,
-                          child: Text('Item ${index + 1}'),
-                        ),
-                      ),
-                    ),
-                  ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: menuItems
+                      .map((e) => MenuItemButton(
+                            onPressed: () => _toggleMenu,
+                            child: SizedBox(
+                              width: 200,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Image.asset(
+                                    e.image ?? '',
+                                    width: 15,
+                                  ),
+                                  const SizedBox(
+                                    width: 15,
+                                  ),
+                                  Text(e.title ?? '')
+                                ],
+                              ),
+                            ),
+                          ))
+                      .toList(),
                 ),
               ),
             );

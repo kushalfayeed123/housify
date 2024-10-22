@@ -78,18 +78,18 @@ class _ScaffoldWithNestedNavigationState
   Widget build(BuildContext context) {
     final state = ref.watch(dashboardProvider).value;
     return Scaffold(
-      body: SafeArea(
-          child: state?.currentAddress != null
-              ? widget.navigationShell
-              : SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                )),
+      backgroundColor: Colors.white,
+      body: state?.currentAddress != null
+          ? widget.navigationShell
+          : SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ),
       extendBody: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: state?.currentAddress != null

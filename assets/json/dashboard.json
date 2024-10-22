@@ -7,36 +7,36 @@
   "rentOfferCount": "2263",
   "locations": [
     {
-      "latitude": 6.524379,
-      "longitude": 3.379206,
+      "latitude": 6.527079,
+      "longitude": 3.381706,
       "address": "Location 1, Lagos",
       "distanceFromCurrent": "11mn P",
       "isOpen": false
     },
     {
-      "latitude": 6.5249,
-      "longitude": 3.3787,
+      "latitude": 6.5276,
+      "longitude": 3.3822,
       "address": "Location 2, Lagos",
       "distanceFromCurrent": "5mn P",
       "isOpen": false
     },
     {
-      "latitude": 6.5244,
-      "longitude": 3.3797,
+      "latitude": 6.5271,
+      "longitude": 3.3827,
       "address": "Location 3, Lagos",
       "distanceFromCurrent": "3mn P",
       "isOpen": false
     },
     {
-      "latitude": 6.5254,
-      "longitude": 3.379,
+      "latitude": 6.5281,
+      "longitude": 3.3819,
       "address": "Location 4, Lagos",
       "distanceFromCurrent": "11mn P",
       "isOpen": false
     },
     {
-      "latitude": 6.5248,
-      "longitude": 3.3795,
+      "latitude": 6.5275,
+      "longitude": 3.3824,
       "address": "Location 5, Lagos",
       "distanceFromCurrent": "56mn P",
       "isOpen": false

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:housify/router.dart';
 import 'package:housify/service_provider.dart';
@@ -7,6 +8,13 @@ import 'package:google_fonts/google_fonts.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   setupProvider();
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // Make status bar transparent
+      statusBarIconBrightness:
+          Brightness.light, // Set icons to light (for dark backgrounds)
+    ),
+  );
   runApp(const ProviderScope(child: MyApp()));
 }
 
