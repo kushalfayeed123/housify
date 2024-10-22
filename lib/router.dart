@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:housify/presentation/chat/chat.dart';
+import 'package:housify/presentation/favorite/favorite.dart';
 import 'package:housify/presentation/home/home.dart';
 import 'package:housify/presentation/map/map.dart';
+import 'package:housify/presentation/settings/settings.dart';
 import 'package:housify/shared/widgets/scaffold_with_nested_navigation.dart';
-import 'package:housify/shared/widgets/under_construction.dart';
 
 final routerProvider = Provider.autoDispose<GoRouter>((ref) {
   final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -80,7 +82,7 @@ final routerProvider = Provider.autoDispose<GoRouter>((ref) {
                   pageBuilder: (context, state) {
                     return CustomTransitionPage(
                         key: UniqueKey(),
-                        child: const UnderConstruction(),
+                        child: const Chat(),
                         transitionDuration: const Duration(seconds: 1),
                         transitionsBuilder:
                             (context, animation, secondaryAnimation, child) {
@@ -128,7 +130,7 @@ final routerProvider = Provider.autoDispose<GoRouter>((ref) {
                       pageBuilder: (context, state) {
                         return CustomTransitionPage(
                             key: UniqueKey(),
-                            child: const UnderConstruction(),
+                            child: const Favorite(),
                             transitionDuration: const Duration(seconds: 1),
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {
@@ -149,7 +151,7 @@ final routerProvider = Provider.autoDispose<GoRouter>((ref) {
                       pageBuilder: (context, state) {
                         return CustomTransitionPage(
                             key: UniqueKey(),
-                            child: const UnderConstruction(),
+                            child: const Settings(),
                             transitionDuration: const Duration(seconds: 1),
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {
