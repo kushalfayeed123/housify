@@ -23,7 +23,13 @@ class Dashboard extends _$Dashboard {
   Future<void> fetchDashboardData() async {
     try {
       final data = await _dashboardService.getDashboardData();
-      final newState = DashboardStateModel(dashboardData: data);
+      final currentState = state.asData?.value;
+
+      final newState = DashboardStateModel(
+        dashboardData: data,
+        currentAddress: currentState?.currentAddress,
+        currentLocation: currentState?.currentLocation,
+      );
       setState(newState);
     } catch (e) {
       rethrow;

@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:housify/shared/widgets/animated_digit.dart';
 
-class Analytics extends StatelessWidget {
+class Analytics extends StatefulWidget {
   final String rentCount;
   final String buyCount;
   const Analytics({super.key, required this.rentCount, required this.buyCount});
 
+  @override
+  State<Analytics> createState() => _AnalyticsState();
+}
+
+class _AnalyticsState extends State<Analytics> {
   @override
   Widget build(BuildContext context) {
     return Animate(
@@ -32,9 +38,10 @@ class Analytics extends StatelessWidget {
                 const SizedBox(
                   height: 40,
                 ),
-                Text(
-                  buyCount,
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                AnimatedDigit(
+                  key: const Key("key1"),
+                  digit: int.parse(widget.rentCount),
+                  textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 45),
@@ -72,9 +79,10 @@ class Analytics extends StatelessWidget {
                 const SizedBox(
                   height: 40,
                 ),
-                Text(
-                  rentCount,
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                AnimatedDigit(
+                  key: const Key("key2"),
+                  digit: int.parse(widget.rentCount),
+                  textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color: Colors.grey,
                       fontWeight: FontWeight.bold,
                       fontSize: 45),

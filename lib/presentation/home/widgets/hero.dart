@@ -17,7 +17,7 @@ class HeroWidget extends ConsumerWidget {
 
     return Animate(
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.6,
+        height: MediaQuery.of(context).size.height * 0.62,
         padding: const EdgeInsets.only(
           top: 30,
           bottom: 8,
@@ -48,7 +48,7 @@ class HeroWidget extends ConsumerWidget {
               title: heroState?.pageText ?? '',
             ),
             const SizedBox(
-              height: 65,
+              height: 45,
             ),
             Analytics(
               rentCount: heroState?.rentOfferCount ?? '0',

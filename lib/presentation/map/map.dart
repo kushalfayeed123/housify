@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:housify/core/domain/dtos/location.dto.dart';
 import 'package:housify/state/dashboard/dashboard.provider.dart';
@@ -14,6 +15,7 @@ class MapScreen extends ConsumerStatefulWidget {
 
 class _MapScreenState extends ConsumerState<MapScreen> {
   List<Marker> allMarkers = [];
+  String selectedItem = '';
 
   @override
   void initState() {
@@ -55,167 +57,179 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                             ),
                       ),
               ),
-            ),
+            )
+                .animate()
+                .fade(
+                  duration: 1200.ms,
+                  curve: Curves.easeOut,
+                )
+                .scale(),
           ),
         ),
       );
     }
 
-    return Stack(
-      children: [
-        FlutterMap(
-          options: MapOptions(
-            initialZoom: 10,
-            keepAlive: true,
-            initialCameraFit: CameraFit.bounds(
-              bounds: LatLngBounds(
-                const LatLng(6.524379, 3.379206),
-                const LatLng(6.527, 3.381),
-              ),
-              padding: const EdgeInsets.only(
-                left: 16,
-                right: 16,
-                top: 88,
-                bottom: 192,
-              ),
-            ),
-          ),
-          children: [
-            TileLayer(
-              urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-              userAgentPackageName: 'com.example.app',
-              tileBuilder: _darkModeTileBuilder,
-            ),
-            MarkerLayer(
-                markers: allMarkers.take(locationsData.length).toList()),
-          ],
-        ),
-        Positioned(
-          top: 50,
-          left: 8,
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      prefixIcon: Icon(Icons.search,
-                          color: Colors.black), // Search icon on the left
-                      hintText: 'Search',
-                      contentPadding: EdgeInsets.symmetric(vertical: 10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(30.0)), // Rounded corners
-                        borderSide: BorderSide.none, // No border
-                      ),
-                    ),
-                  ),
+    return Animate(
+      child: Stack(
+        children: [
+          FlutterMap(
+            options: MapOptions(
+              initialZoom: 10,
+              keepAlive: true,
+              initialCameraFit: CameraFit.bounds(
+                bounds: LatLngBounds(
+                  const LatLng(6.524379, 3.379206),
+                  const LatLng(6.527, 3.381),
                 ),
-                const SizedBox(
-                  width: 12,
+                padding: const EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  top: 88,
+                  bottom: 192,
                 ),
-                Container(
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(100)),
-                  child: Center(
-                    child: Image.asset(
-                      'assets/images/settings-sliders.png',
-                      width: 20,
-                    ),
-                  ),
-                )
-              ],
+              ),
             ),
+            children: [
+              TileLayer(
+                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                userAgentPackageName: 'com.example.app',
+                tileBuilder: _darkModeTileBuilder,
+              ),
+              Animate(
+                child: MarkerLayer(
+                    markers: allMarkers.take(locationsData.length).toList()),
+              ),
+            ],
           ),
-        ),
-        Positioned(
-          bottom: 120,
-          left: 8,
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.97,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(0.6),
-                          borderRadius: BorderRadius.circular(100)),
-                      child: Center(
-                        child: Image.asset(
-                          'assets/images/database.png',
-                          width: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(0.6),
-                          borderRadius: BorderRadius.circular(100)),
-                      child: Center(
-                        child: Image.asset(
-                          'assets/images/paper-plane.png',
-                          width: 20,
-                          color: Colors.white,
+          Positioned(
+            top: 50,
+            left: 8,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: const TextField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        prefixIcon: Icon(Icons.search,
+                            color: Colors.black), // Search icon on the left
+                        hintText: 'Search',
+                        contentPadding: EdgeInsets.symmetric(vertical: 10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(30.0)), // Rounded corners
+                          borderSide: BorderSide.none, // No border
                         ),
                       ),
                     )
-                  ],
-                ),
-                Container(
-                  height: 50,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
+                        .animate()
+                        .fade(duration: 1200.ms, curve: Curves.easeOut)
+                        .scale(),
                   ),
-                  decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.6),
-                      borderRadius: BorderRadius.circular(100)),
-                  child: Center(
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          'assets/images/align-left.png',
-                          width: 20,
-                          color: Colors.white,
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          'List of variants',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Colors.white),
-                        )
-                      ],
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(100)),
+                    child: Center(
+                      child: Image.asset(
+                        'assets/images/settings-sliders.png',
+                        width: 20,
+                      ),
                     ),
-                  ),
-                ),
-              ],
+                  )
+                      .animate()
+                      .fade(duration: 1200.ms, curve: Curves.easeOut)
+                      .scale(),
+                ],
+              ),
             ),
           ),
-        )
-      ],
+          Positioned(
+            bottom: 120,
+            left: 8,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.97,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const AnimatedMenu(),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      IconButton(
+                        icon: Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(100)),
+                          child: Center(
+                            child: Image.asset(
+                              'assets/images/paper-plane.png',
+                              width: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        onPressed: () {},
+                      )
+                    ],
+                  )
+                      .animate()
+                      .fade(duration: 1200.ms, curve: Curves.easeOut)
+                      .scale(),
+                  Container(
+                    height: 50,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.grey.withOpacity(0.6),
+                        borderRadius: BorderRadius.circular(100)),
+                    child: Center(
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'assets/images/align-left.png',
+                            width: 20,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            'List of variants',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.white),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                      .animate()
+                      .fade(duration: 1200.ms, curve: Curves.easeOut)
+                      .scale(),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -237,6 +251,115 @@ class _MapScreenState extends ConsumerState<MapScreen> {
         0, 0, 0, 1, 0, // Alpha channel
       ]),
       child: tileWidget,
+    );
+  }
+}
+
+class AnimatedMenu extends StatefulWidget {
+  const AnimatedMenu({super.key});
+
+  @override
+  AnimatedMenuState createState() => AnimatedMenuState();
+}
+
+class AnimatedMenuState extends State<AnimatedMenu>
+    with SingleTickerProviderStateMixin {
+  bool _isMenuOpen = false;
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 400),
+      vsync: this,
+    );
+  }
+
+  void _toggleMenu(MenuController controller) {
+    setState(() {
+      _isMenuOpen = !_isMenuOpen;
+      if (_isMenuOpen) {
+        _animationController.forward();
+        controller.open();
+      } else {
+        _animationController.reverse();
+        controller.close();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MenuAnchor(
+      builder:
+          (BuildContext context, MenuController controller, Widget? child) {
+        return IconButton(
+          onPressed: () {
+            _toggleMenu(controller);
+          },
+          icon: Container(
+            height: 50,
+            width: 50,
+            decoration: BoxDecoration(
+              color: Colors.grey.withOpacity(0.6),
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: Center(
+              child: Image.asset(
+                'assets/images/database.png',
+                width: 20,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          tooltip: 'Show menu',
+        );
+      },
+      menuChildren: [
+        AnimatedBuilder(
+          animation: _animationController,
+          builder: (context, child) {
+            return Transform.scale(
+              scale: _animationController.value,
+              child: Opacity(
+                opacity: _animationController.value,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 10,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: List<MenuItemButton>.generate(
+                      3,
+                      (int index) => MenuItemButton(
+                        onPressed: () => setState(() {}),
+                        child: SizedBox(
+                          width: 200,
+                          child: Text('Item ${index + 1}'),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

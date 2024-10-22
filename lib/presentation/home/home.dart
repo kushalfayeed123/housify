@@ -24,7 +24,7 @@ class _HomeState extends ConsumerState<Home> {
             const HeroWidget(),
             Positioned(
                 height: 60,
-                top: MediaQuery.of(context).size.height * 0.59,
+                top: MediaQuery.of(context).size.height * 0.61,
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: 40,

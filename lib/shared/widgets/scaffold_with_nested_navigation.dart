@@ -50,7 +50,7 @@ class _ScaffoldWithNestedNavigationState
   @override
   void initState() {
     super.initState();
-    fetchData();
+    fetchData(true);
 
     bottomNavItems
         .firstWhere(
@@ -61,7 +61,7 @@ class _ScaffoldWithNestedNavigationState
         .isActive = true;
   }
 
-  void fetchData() async {
+  void fetchData(bool fetchLocation) async {
     try {
       await ref
           .read<Dashboard>(dashboardProvider.notifier)
@@ -78,9 +78,8 @@ class _ScaffoldWithNestedNavigationState
   Widget build(BuildContext context) {
     final state = ref.watch(dashboardProvider).value;
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
-          child: (state?.currentAddress ?? '').isNotEmpty
+          child: state?.currentAddress != null
               ? widget.navigationShell
               : SizedBox(
                   width: MediaQuery.of(context).size.width,
@@ -93,7 +92,7 @@ class _ScaffoldWithNestedNavigationState
                 )),
       extendBody: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: (state?.currentAddress ?? '').isNotEmpty
+      floatingActionButton: state?.currentAddress != null
           ? Animate(
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.8,
@@ -124,7 +123,13 @@ class _ScaffoldWithNestedNavigationState
                   currentIndex: widget.navigationShell.currentIndex,
                   onTap: (int index) => _goBranch(index, ref),
                 ),
-              ).animate().fade(duration: 2000.ms, delay: 4000.ms).slide(
+              )
+                  .animate()
+                  .fade(
+                    duration: 2000.ms,
+                    delay: 4000.ms,
+                  )
+                  .slide(
                     begin: const Offset(0, 1),
                     end: Offset.zero,
                     curve: Curves.easeOut,
@@ -135,6 +140,7 @@ class _ScaffoldWithNestedNavigationState
   }
 
   _goBranch(int index, WidgetRef ref) {
+    fetchData(false);
     widget.navigationShell.goBranch(
       index,
       initialLocation: index == widget.navigationShell.currentIndex,
