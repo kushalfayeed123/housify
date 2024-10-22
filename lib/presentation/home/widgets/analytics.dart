@@ -40,7 +40,7 @@ class _AnalyticsState extends State<Analytics> {
                 ),
                 AnimatedDigit(
                   key: const Key("key1"),
-                  digit: int.parse(widget.rentCount),
+                  digit: int.parse(widget.buyCount),
                   textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
